@@ -76,6 +76,7 @@ def cipher():
             output_text += f"979{len_unicode}{unicode}"
 
     while key != "":
+        print("Computing…")
         if key.startswith("1") and len(key) > 1 and key[1].isdigit():
             shift_value = int(key[1])
             input_shift = output_text
@@ -136,7 +137,7 @@ def cipher():
 
     with open("output.txt", "w+", encoding="UTF-8") as of:
         of.write(output_text)
-    print(f"Output: {output_text}")
+    # print(f"Output: {output_text}")
 
 
 def decipher():
@@ -155,6 +156,7 @@ def decipher():
     key_used = ""
     is_ciphered = True
     while is_ciphered:
+        print("Computing…")
         if (is_final := input_text.startswith("985")) or input_text.startswith("987"):
             input_text = input_text[3:]
             while input_text != "":
@@ -235,7 +237,7 @@ def decipher():
     with open("key_used.txt", "w+", encoding="UTF-8") as kf:
         kf.write(key_used)
 
-    print(f"Output: {output_text}")
+    # print(f"Output: {output_text}")
     print(f"Key used: {key_used}")
 
 
