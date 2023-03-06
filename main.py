@@ -34,16 +34,7 @@ char_list = ["\u0000",
              ]
 
 
-def cipher():
-    input_mode = input("Input mode (file/line)(f/l) : ")
-    if input_mode in ["f", "file"]:
-        with open(input("File path: "), "r+", encoding="UTF-8") as f:
-            input_text = f.read()
-    else:
-        input_text = input("Input: ")
-
-    key = input("Key (leave empty for default, r for a random key): ")
-
+def cipher(input_text, key):
     if key == "r":
         key = ""
         for i in range(random.randint(10, 15)):
@@ -138,16 +129,10 @@ def cipher():
     with open("output.txt", "w+", encoding="UTF-8") as of:
         of.write(output_text)
     # print(f"Output: {output_text}")
+    return output_text
 
 
-def decipher():
-    input_mode = input("Input mode (file/line)(f/l) : ")
-    if input_mode in ["f", "file"]:
-        with open(input("File path: "), "r+", encoding="UTF-8") as f:
-            input_text = f.read()
-    else:
-        input_text = input("Input: ")
-
+def decipher(input_text):
     if not input_text.startswith("989") or not input_text.endswith("988"):
         raise Exception("Invalid input")
     input_text = input_text[3:-3]
@@ -238,11 +223,23 @@ def decipher():
         kf.write(key_used)
 
     # print(f"Output: {output_text}")
-    print(f"Key used: {key_used}")
+    # print(f"Key used: {key_used}")
+    return output_text, key_used
 
 
 while (mode := input("Mode (c/d/exit) : ")) != "exit":
+    input_mode = input("Input mode (file/line)(f/l) : ")
+    if input_mode in ["f", "file"]:
+        file_name = input("File path (default: input.txt) : ")
+        if file_name == "":
+            file_name = "input.txt"
+        with open(file_name, "r+", encoding="UTF-8") as f:
+            input_text_ = f.read()
+    else:
+        input_text_ = input("Input: ")
+
     if mode == "c":
-        cipher()
+        key_ = input("Key (leave empty for default, r for a random key): ")
+        output_ = cipher(input_text_, key_)
     elif mode == "d":
-        decipher()
+        output_, key_used_ = decipher(input_text_)
