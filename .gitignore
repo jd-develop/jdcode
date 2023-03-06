@@ -120,3 +120,4 @@ dmypy.json
 # Local files
 output.txt
 key_used.txt
+input.txt
